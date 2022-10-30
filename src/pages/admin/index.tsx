@@ -1,86 +1,157 @@
 import styled from "@emotion/styled";
-import { useMemo, useState } from "react";
-import { REQUESTS } from "constants/requests";
-import StatusCard from "components/StatusCard";
+import { nanoid } from "@reduxjs/toolkit";
+import { useCallback, useState } from "react";
+import { useAddPopup } from "state/website/hooks";
+import { darken } from "polished";
 
 const Wrapper = styled.main`
   position: relative;
-  max-width: 1200px;
+  max-width: 720px;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 3rem;
+  @media screen and (max-width: ${({ theme }) => `${theme.mediaWidth.upToMedium}px`}) {
+    margin-top: 1rem;
+  }
 `;
 
-const DiscoverHelper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  & > div {
-    display: grid;
-    gap: 0.6rem;
-    grid-auto-flow: row;
+const Head = styled.section`
+  text-align: center;
+  margin: 1rem 1rem 2rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+`;
 
-    & > p {
+const Body = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+const Inputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+
+  & > input {
+    border: 1px solid transparent;
+    outline: none;
+    border-radius: ${({ theme }) => theme.borderRadius};
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.colors.normal};
+    :hover,
+    :focus {
+      border-color: ${({ theme }) => theme.colors.borderColor};
+    }
+    ::placeholder {
+      color: ${({ theme }) => theme.colors.placeholder};
+    }
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+  & > textarea {
+    border: 1px solid transparent;
+    outline: none;
+    border-radius: ${({ theme }) => theme.borderRadius};
+    font-size: 1.5rem;
+    padding: 1rem;
+    resize: none;
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.colors.normal};
+
+    :hover,
+    :focus {
+      border-color: ${({ theme }) => theme.colors.borderColor};
+    }
+    ::placeholder {
+      color: ${({ theme }) => theme.colors.placeholder};
+    }
+  }
+
+  @media screen and (max-width: ${({ theme }) => `${theme.mediaWidth.upToExtraSmall}px`}) {
+    & > textarea,
+    input {
+      font-size: 1rem;
+      padding: 0.75rem;
+    }
+  }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+
+  & > button {
+    border: 1px solid transparent;
+    border-radius: ${({ theme }) => theme.borderRadius};
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
+    color: ${({ theme }) => theme.colors.normal};
+    font-size: 1rem;
+    font-weight: 700;
+    flex: 1;
+    width: fit-content;
+    padding: 1rem;
+    :hover,
+    :focus {
+      cursor: pointer;
+      outline: none;
+      border: 1px solid ${({ theme }) => theme.colors.borderColor};
+    }
+    :hover {
       color: ${({ theme }) => theme.colors.highlight};
-      font-weight: 500;
     }
 
-    & > input {
-      background: ${({ theme }) => theme.colors.backgroundColor};
-      border: 1px solid transparent;
-      border-radius: ${({ theme }) => theme.borderRadius};
-      outline: none;
-      font-size: 1rem;
-      padding: 0.5rem 0.8rem;
-      color: ${({ theme }) => theme.colors.normal};
-      ::placeholder {
-        color: ${({ theme }) => theme.colors.placeholder};
-      }
+    &[disabled] {
+      color: ${({ theme }) => darken(0.2, theme.colors.normal)};
+      cursor: not-allowed;
+      box-shadow: none !important;
       :hover,
+      :active,
       :focus {
-        border-color: ${({ theme }) => theme.colors.borderColor};
+        border-color: transparent;
       }
     }
   }
 `;
 
-const Articles = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  margin-top: 50px;
-  gap: 24px;
-  position: relative;
-`;
-
 export default function Admin() {
-  const [searchInput, setSearchInput] = useState<string>();
-
-  const searchedArticles = useMemo(() => {
-    if (searchInput) {
-      return REQUESTS.filter((a) => {
-        const content = a.requestId + " " + a.title;
-        return content.toLocaleLowerCase().includes(searchInput.trim().toLocaleLowerCase());
-      });
-    }
-    return REQUESTS;
-  }, [searchInput]);
+  const [name, setName] = useState<string>();
+  const disableEmailSubmit = !name;
+  const addPopup = useAddPopup();
 
   return (
     <Wrapper>
-      <DiscoverHelper>
-        <div>
-          <p>Search</p>
-          <input
-            placeholder={"search by title or tag"}
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          ></input>
-        </div>
-      </DiscoverHelper>
+      <Head>
+        <title>Manage Requests</title>
+      </Head>
+      <Body>
+        <Inputs>
+          <input placeholder={"Request Id"} value={name} onChange={(e) => setName(e.target.value)}></input>
 
-      <Articles>
-        {searchedArticles.map((a) => (
-          <StatusCard key={a.link} fundRequest={a} />
-        ))}
-      </Articles>
+        </Inputs>
+        <Buttons>
+
+        <button disabled={disableEmailSubmit} onClick={() => addPopup({
+                key: nanoid(),
+                content: { text: `Rejected Request: ${name}`, isSuccess: true },
+                show: true,
+                removeAfterMs: 10000,
+              })}>
+            Reject
+        </button>
+
+        <button disabled={disableEmailSubmit} onClick={() => addPopup({
+                key: nanoid(),
+                content: { text: `Approved Request: ${name}`, isSuccess: true },
+                show: true,
+                removeAfterMs: 10000,
+              })}>
+            Approve
+        </button>
+        </Buttons>
+      </Body>
     </Wrapper>
   );
 }

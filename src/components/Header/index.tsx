@@ -180,7 +180,7 @@ export default function Header() {
         <StyledNavLink to={"/"}>Home</StyledNavLink>
         <StyledNavLink to={"/request"}>Request</StyledNavLink>
         <StyledNavLink to={"/status"}>Status</StyledNavLink>
-        <StyledNavLink to={"/admin"}>Admin</StyledNavLink>
+        <StyledNavLink to={"/admin"}>UNICEF</StyledNavLink>
       </Tabs>
       <Settings>
         <Setting>
