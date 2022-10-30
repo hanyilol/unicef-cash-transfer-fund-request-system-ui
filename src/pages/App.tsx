@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import ErrorBoundary from "components/ErrorBoundary";
 import Home from "pages/home";
 import Status from "pages/status";
+import Admin from "pages/admin";
 import Request from "pages/request";
 import Header from "components/Header";
 import Popups from "components/Popups";
@@ -56,6 +57,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/status" element={<Status />} />
               <Route path="/request" element={<Request />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </Suspense>
         </BodyWrapper>
