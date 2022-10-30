@@ -177,7 +177,7 @@ export default function Header() {
         </Logo>
       </Title>
       <Tabs>
-        <StyledNavLink to={"/"}>Home</StyledNavLink>
+        <StyledNavLink to={"/"} end>Home</StyledNavLink>
         <StyledNavLink to={"/request"}>Request</StyledNavLink>
         <StyledNavLink to={"/status"}>Status</StyledNavLink>
         <StyledNavLink to={"/admin"}>UNICEF</StyledNavLink>
