@@ -35,7 +35,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "predeploy": "npm run build && cp CNAME ./build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build -b main -r git@github.com:Unicef-Cash-Transfer/unicef-cash-transfer.git"
   },
   "browserslist": {
