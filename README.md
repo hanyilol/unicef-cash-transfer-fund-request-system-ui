@@ -27,6 +27,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 To deploy to github page.
 This will run the "predeploy" script automatically to build the project first.
 
+The website will be deployed to https://unicef-cash-transfer.github.io/unicef-cash-transfer/#/
+
 ### `npm run lint`
 
 Find out lint errors.
