@@ -56,7 +56,7 @@ export default function Status() {
   const searchedArticles = useMemo(() => {
     if (searchInput) {
       return REQUESTS.filter((a) => {
-        const content = a.requestId + " " + a.title;
+        const content = a.requestId;
         return content.toLocaleLowerCase().includes(searchInput.trim().toLocaleLowerCase());
       });
     }
@@ -69,7 +69,7 @@ export default function Status() {
         <div>
           <p>Search</p>
           <input
-            placeholder={"search by title or tag"}
+            placeholder={"search by request id"}
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           ></input>

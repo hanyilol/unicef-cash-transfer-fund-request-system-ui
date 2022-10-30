@@ -53,7 +53,7 @@ export default function StatusCard({ fundRequest }: { fundRequest: FundRequest }
   return (
     <Wrapper>
       <div>
-        <div>{fundRequest.requestId}</div>
+        <div>RequestId: {fundRequest.requestId}</div>
       </div>
       <div>{fundRequest.title}</div>
       <div>{fundRequest.publishTime.toISOString()}</div>
