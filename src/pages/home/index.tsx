@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <Wrapper>
       <Intro>
-        <h1>Unicef Cash Transfer</h1>
+        <h1>UNICEF Cash Transfer</h1>
         <Line />
         <p>Request System</p>
       </Intro>
