@@ -21,10 +21,10 @@ const Intro = styled.div`
 
   @media screen and (max-width: ${({ theme }) => `${theme.mediaWidth.upToExtraSmall}px`}) {
     h1 {
-      font-size: 3rem;
+      font-size: 1.5rem;
     }
     p {
-      font-size: 0.8rem;
+      font-size: 1rem;
     }
   }
 `;
@@ -46,7 +46,7 @@ export default function Home() {
       <Intro>
         <h1>UNICEF Cash Transfer</h1>
         <Line />
-        <p>Request System</p>
+        <p>Fund Request System</p>
       </Intro>
     </Wrapper>
   );
